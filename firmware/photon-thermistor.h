@@ -25,14 +25,14 @@ class Thermistor {
     int _pin;
     int _seriesResistor;
     int _adcMax;
-		int _thermistorNominal;
-		int _temperatureNominal;
-		int _bCoef;
+    int _thermistorNominal;
+    int _temperatureNominal;
+    int _bCoef;
     int _samples;
     int _sampleDelay;
 
-	public:
-		Thermistor(int pin, int seriesResistor, int adcMax, int thermistorNominal, int temperatureNominal, int bCoef, int samples, int sampleDelay);
+  public:
+    Thermistor(int pin, int seriesResistor, int adcMax, int thermistorNominal, int temperatureNominal, int bCoef, int samples, int sampleDelay);
 
     float readTempRaw();
     float readTempK();
