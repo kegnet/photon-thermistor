@@ -1,11 +1,11 @@
-#include "Thermistor.h"
+#include "photon-thermistor.h"
 
 Thermistor *thermistor;
 
 void setup() {
   // For an NTC (negative temperature coefficient) thermistor only!
   // CONSTRUCTOR PARAMETERS:
-  // 1. pin: Photon PIN
+  // 1. pin: Photon pin
   // 2. seriesResistor: The resistance value of the fixed resistor (based on your hardware setup)
   // 3. adcMax: The maximum analog-to-digital convert value returned by analogRead (Photon is 4095 NOT the typical Arduino 1023!)
   // 4. thermistorNominal: Resistance at nominal temperature (will be documented with the thermistor, usually "10k")
