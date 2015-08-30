@@ -12,7 +12,8 @@ For an NTC (negative temperature coefficient) thermistor only!
 
 ###CONSTRUCTOR PARAMETERS:
 
-```Thermistor(int pin, int seriesResistor, int adcMax, int thermistorNominal, int temperatureNominal, int bCoef, int samples, int sampleDelay);
+```
+Thermistor(int pin, int seriesResistor, int adcMax, int thermistorNominal, int temperatureNominal, int bCoef, int samples, int sampleDelay);
 
 <pin>: Photon pin
 <seriesResistor>: The resistance value of the fixed resistor (based on your hardware setup)
