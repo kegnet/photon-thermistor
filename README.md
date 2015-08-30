@@ -10,12 +10,13 @@ Adafruit with full configuration of the required variables as constructor parame
 
 For an NTC (negative temperature coefficient) thermistor only!
 
-CONSTRUCTOR PARAMETERS:
-1: Photon PIN
-2: The resistance value of the fixed resistor (based on your hardware setup)
-3: The maximum analog-to-digital convert value returned by analogRead (Photon is 4095 NOT the typical Arduino 1023!)
-4: Resistance at nominal temperature (will be documented with the thermistor, usually "10k")
-5: Temperature for nominal resistance in celcius (will be supplied with the thermistor, assume 25 if not stated)
-6: Beta coefficient of the thermistor; usually 3435 or 3950 (will be documented with the thermistor)
-7: Number of analog samples to average (for smoothing)
-8: Milliseconds between analog samples (for smoothing)
+##CONSTRUCTOR PARAMETERS:
+
+1. Photon PIN
+2. The resistance value of the fixed resistor (based on your hardware setup)
+3. The maximum analog-to-digital convert value returned by analogRead (Photon is 4095 NOT the typical Arduino 1023!)
+4. Resistance at nominal temperature (will be documented with the thermistor, usually "10k")
+5. Temperature for nominal resistance in celcius (will be supplied with the thermistor, assume 25 if not stated)
+6. Beta coefficient of the thermistor; usually 3435 or 3950 (will be documented with the thermistor)
+7. Number of analog samples to average (for smoothing)
+8. Milliseconds between analog samples (for smoothing)
