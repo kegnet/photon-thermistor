@@ -1,6 +1,6 @@
 # kegnet-thermistor-photon
 A thermistor library for Particle (Spark) Photon
-Based on Adafruit Thermistor documentation at https://learn.adafruit.com/thermistor/using-a-thermistor with thermistor hardware https://learn.adafruit.com/thermistor/overview.
+Based on Adafruit Thermistor documentation at https://learn.adafruit.com/thermistor/using-a-thermistor with thermistor hardware http://www.adafruit.com/products/372.
 
 Most other thermistor libraries assume the maximum alalogRead value is 1023, but
 the Photon's maximum analogRead value is 4095!
