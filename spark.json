@@ -1,0 +1,7 @@
+{
+	"name": "photon-thermistor",
+	"author": "Paul Cowan <paul@monospacesoftware.com>",
+	"version": "1.0.0",
+	"license": "LGPL",
+	"description": "Configurable thermistor library for Photon based on Adafruit's documentation."
+}
