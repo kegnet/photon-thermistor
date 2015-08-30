@@ -12,13 +12,14 @@ For an NTC (negative temperature coefficient) thermistor only!
 
 ###CONSTRUCTOR PARAMETERS:
 
-`Thermistor(int pin, int seriesResistor, int adcMax, int thermistorNominal, int temperatureNominal, int bCoef, int samples, int sampleDelay);`
+`Thermistor(int pin, int seriesResistor, int adcMax, int thermistorNominal, int temperatureNominal, int bCoef, int samples, int sampleDelay);
 
-1. pin: Photon PIN
-2. seriesResistor: The resistance value of the fixed resistor (based on your hardware setup)
-3. adcMax: The maximum analog-to-digital convert value returned by analogRead (Photon is 4095 NOT the typical Arduino 1023!)
-4. thermistorNominal: Resistance at nominal temperature (will be documented with the thermistor, usually "10k")
-5. temperatureNominal: Temperature for nominal resistance in celcius (will be supplied with the thermistor, assume 25 if not stated)
-6. bCoef: Beta coefficient of the thermistor; usually 3435 or 3950 (will be documented with the thermistor)
-7. samples: Number of analog samples to average (for smoothing)
-8. sampleDelay: Milliseconds between analog samples (for smoothing)
+<pin>: Photon pin
+<seriesResistor>: The resistance value of the fixed resistor (based on your hardware setup)
+<adcMax>: The maximum analog-to-digital convert value returned by analogRead (Photon is 4095 NOT the typical Arduino 1023!)
+<thermistorNominal>: Resistance at nominal temperature (will be documented with the thermistor, usually "10k")
+<temperatureNominal>: Temperature for nominal resistance in celcius (will be supplied with the thermistor, assume 25 if not stated)
+<bCoef>: Beta coefficient of the thermistor; usually 3435 or 3950 (will be documented with the thermistor)
+<samples>: Number of analog samples to average (for smoothing)
+<sampleDelay>: Milliseconds between analog samples (for smoothing)
+`
