@@ -13,7 +13,7 @@ For NTC (negative temperature coefficient) thermistors only!
 
 ### Hookup
 
-[Breadboard Hookup](breadboard_hookup.jpg)
+[Breadboard Hookup](https://raw.githubusercontent.com/kegnet/photon-thermistor/master/breadboard_hookup.jpg)
 
 Or see https://learn.adafruit.com/thermistor/using-a-thermistor
 
