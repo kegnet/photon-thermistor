@@ -1,0 +1,24 @@
+# Thermistor Testing
+
+Connect an NTC thermistor as described in the README, or as follows:
+
+1. Connect both pins of the thermistor to a breadboard.
+2. Connect one pin to ground.
+3. Connect the other pin to 3.3V via a 10k ohm resistor.
+4. Connect pin A0 between the thermistor and the 10k resistor.
+
+Flash the temperature.ino example to a working and online device taking care
+to adjust the constructor parameter to match your actual thermistor values.
+
+Open the Particle console. The current thermistor temperature in Fahrenheit
+should be reported every 5 seconds.
+
+Using an accurate instant read digital thermometer, submerge the thermistor and
+the thermometer in a cup of heated water, and a cup of ice water.  The
+temperature reported on the thermometer and on the Particle console should
+match within 2 degrees.
+
+Repeat the tests above with other thermistors and other resistors.  It should
+work for various other "seriesResistor" values, and various other NTC
+thermistors, if the constructor parameters thermistorNominal,
+temperatureNominal, and bCoef are set correctly for the given thermistor.

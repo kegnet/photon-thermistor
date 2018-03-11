@@ -1,6 +1,6 @@
 # photon-thermistor
-A thermistor library for Particle Photon based on Adafruit's thermistor example 
-at https://learn.adafruit.com/thermistor/using-a-thermistor with thermistor 
+A thermistor library for Particle Photon based on Adafruit's thermistor example
+at https://learn.adafruit.com/thermistor/using-a-thermistor with thermistor
 hardware http://www.adafruit.com/products/372.
 
 This library uses the simplified version of the Steinhart–Hart equation described by
@@ -51,3 +51,8 @@ void loop() {
   delay(5000);
 }
 ```
+
+### Troubleshooting
+
+* If the temperature reported by the thermistor is a very small negative number, around -140, the circuit is open or thermistor is not connected.
+* If the temperature reported by the thermistor is a very high number, such as 650, the thermistor is likely connected without the 10k ohm resistor.
