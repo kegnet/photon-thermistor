@@ -1,16 +1,23 @@
 # photon-thermistor
-A thermistor library for Particle (Spark) Photon
-Based on Adafruit Thermistor documentation at https://learn.adafruit.com/thermistor/using-a-thermistor with thermistor hardware http://www.adafruit.com/products/372.
+A thermistor library for Particle Photon based on Adafruit's thermistor example 
+at https://learn.adafruit.com/thermistor/using-a-thermistor with thermistor 
+hardware http://www.adafruit.com/products/372.
 
-Most other thermistor libraries assume the maximum alalogRead value is 1023, but
+Most other thermistor libraries assume the maximum analogRead value is 1023, but
 the Photon's maximum analogRead value is 4095!
 
-This library uses the simplied version of the Steinhart–Hart equation described in the
+This library uses the simplified version of the Steinhart–Hart equation described by
 Adafruit with full configuration of the required variables as constructor parameters.
 
-For an NTC (negative temperature coefficient) thermistor only!
+For NTC (negative temperature coefficient) thermistors only!
 
-###CONSTRUCTOR PARAMETERS:
+### Hookup
+
+[Breadboard Hookup](breadboard_hookup.jpg)
+
+Or see https://learn.adafruit.com/thermistor/using-a-thermistor
+
+### CONSTRUCTOR PARAMETERS:
 
 ```
 Thermistor(int pin, int seriesResistor, int adcMax, int thermistorNominal, int temperatureNominal, int bCoef, int samples, int sampleDelay);
