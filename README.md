@@ -13,11 +13,13 @@ For NTC (negative temperature coefficient) thermistors only!
 
 ### Hookup
 
-[Breadboard Hookup](https://raw.githubusercontent.com/kegnet/photon-thermistor/master/breadboard_hookup.jpg)
+![Breadboard Hookup](https://raw.githubusercontent.com/kegnet/photon-thermistor/master/breadboard_hookup.png)
 
 Or see https://learn.adafruit.com/thermistor/using-a-thermistor
 
-### CONSTRUCTOR PARAMETERS:
+### Configuration
+
+Configuration is done via constructor parameters:
 
 ```
 Thermistor(int pin, int seriesResistor, int adcMax, int thermistorNominal, int temperatureNominal, int bCoef, int samples, int sampleDelay);
@@ -30,4 +32,22 @@ Thermistor(int pin, int seriesResistor, int adcMax, int thermistorNominal, int t
 <bCoef>: Beta coefficient of the thermistor; usually 3435 or 3950 (will be documented with the thermistor)
 <samples>: Number of analog samples to average (for smoothing)
 <sampleDelay>: Milliseconds between analog samples (for smoothing)
+```
+
+### Example
+
+```
+#include "photon-thermistor.h"
+
+Thermistor *thermistor;
+
+void setup() {
+  thermistor = new Thermistor(A1, 10000, 4095, 10000, 25, 3950, 5, 20);
+}
+
+void loop() {
+  float tempF = thermistor->readTempF();
+  Particle.publish(String("temp"), String(tempF));
+  delay(5000);
+}
 ```

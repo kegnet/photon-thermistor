@@ -1,5 +1,5 @@
 /*
-  Thermistor.cpp - KegNet Thermistor Library
+  Thermistor.cpp - Photon Thermistor Library
 
   Copyright (c) 2015 Paul Cowan <paul@monospacesoftware.com>
   All right reserved.
