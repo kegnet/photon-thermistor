@@ -42,7 +42,7 @@ Thermistor(int pin, int seriesResistor, int adcMax, int thermistorNominal, int t
 Thermistor *thermistor;
 
 void setup() {
-  thermistor = new Thermistor(A1, 10000, 4095, 10000, 25, 3950, 5, 20);
+  thermistor = new Thermistor(A0, 10000, 4095, 10000, 25, 3950, 5, 20);
 }
 
 void loop() {
