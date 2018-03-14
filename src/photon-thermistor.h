@@ -18,24 +18,44 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+#ifndef PHOTON_THERMISTOR_H
+#define PHOTON_THERMISTOR_H
+
 #include <math.h>
 
+
 class Thermistor {
-  private:
-    int _pin;
-    int _seriesResistor;
-    int _adcMax;
-    int _thermistorNominal;
-    int _temperatureNominal;
-    int _bCoef;
-    int _samples;
-    int _sampleDelay;
+  protected:
+    const int _pin;
+    const int _seriesResistor;
+    const int _adcMax;
+    const int _thermistorNominal;
+    const int _temperatureNominal;
+    const int _bCoef;
+    const int _samples;
+    const int _sampleDelay;
+
+    float readTempRaw() const;
 
   public:
-    Thermistor(int pin, int seriesResistor, int adcMax, int thermistorNominal, int temperatureNominal, int bCoef, int samples, int sampleDelay);
+    /*
+    * arg 1: pin: Photon analog pin
+    * arg 2: seriesResistor: The ohms value of the fixed resistor (based on your hardware setup, usually 10k)
+    * arg 3: adcMax: The maximum analog-to-digital convert value returned by analogRead (Photon is 4095 NOT the typical Arduino 1023!)
+    * arg 4: thermistorNominal: Resistance at nominal temperature (will be documented with the thermistor, usually 10k)
+    * arg 5: temperatureNominal: Temperature for nominal resistance in celcius (will be documented with the thermistor, assume 25 if not stated)
+    * arg 6: bCoef: Beta coefficient (or constant) of the thermistor (will be documented with the thermistor, typically 3380, 3435, or 3950)
+    * arg 7: samples: Number of analog samples to average (for smoothing)
+    * arg 8: sampleDelay: Milliseconds between samples (for smoothing) */
+    Thermistor(int pin, int seriesResistor, int adcMax, int thermistorNominal,
+    		int temperatureNominal, int bCoef, int samples, int sampleDelay);
 
-    float readTempRaw();
-    float readTempK();
-    float readTempC();
-    float readTempF();
+    // Temperature in Kelvin
+    float readTempK() const;
+    // Temperature in Celsius
+    float readTempC() const;
+    // Temperature in Farenight
+    float readTempF() const;
 };
+
+#endif

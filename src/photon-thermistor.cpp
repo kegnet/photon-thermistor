@@ -22,46 +22,36 @@
 #include "application.h"
 #include <math.h>
 
-#define ABS_ZERO 273.15
+#define ABS_ZERO -273.15
 
-Thermistor::Thermistor(int pin, int seriesResistor, int adcMax, int thermistorNominal, int temperatureNominal, int bCoef, int samples, int sampleDelay) {
-  _pin = pin;
-  _seriesResistor = seriesResistor;
-  _adcMax = adcMax;
-  _thermistorNominal = thermistorNominal;
-  _temperatureNominal = temperatureNominal;
-  _bCoef = bCoef;
-  _samples = samples;
-  _sampleDelay = sampleDelay;
-
+Thermistor::Thermistor(int pin, int seriesResistor, int adcMax, int thermistorNominal,
+		int temperatureNominal, int bCoef, int samples, int sampleDelay) :
+		_pin(pin),_seriesResistor(seriesResistor), _adcMax(adcMax), _thermistorNominal(thermistorNominal),
+		_temperatureNominal(thermistorNominal), _bCoef(bCoef), _samples(samples), _sampleDelay(sampleDelay) {
   pinMode(_pin, INPUT);
 }
 
-float Thermistor::readTempRaw() {
-  float sum = 0;
-  for(int i=0; i<_samples; i++) {
+float Thermistor::readTempRaw() const {
+  unsigned sum = 0;
+  for(int i=0; i<_samples-1; i++) {
     sum += analogRead(_pin);
     delay(_sampleDelay);
   }
+  sum += analogRead(_pin);
 
-  return sum / ((float)_samples);
+  return (1. * sum) / _samples;
 }
-
-float Thermistor::readTempK() {
+float Thermistor::readTempK() const {
   float adcAvg = readTempRaw();
-  float r = ((float)_seriesResistor) / (((float)_adcMax) / adcAvg - 1);
-  float s = (r / ((float)_thermistorNominal));
-  s = log(s);
-  s = s * (1 / ((float)_bCoef));
-  s = s + 1 / (((float)_temperatureNominal) + ABS_ZERO);
-  s = 1 / s;
-  return s;
+  float resistance = ((float)_seriesResistor) / (((float)_adcMax) / adcAvg - 1);
+  float s = log(resistance / _thermistorNominal) / _bCoef + 1.0f / (_temperatureNominal - ABS_ZERO);
+  return 1 / s;
 }
 
-float Thermistor::readTempC() {
-  return readTempK() - ABS_ZERO;
+float Thermistor::readTempC() const {
+  return readTempK() + ABS_ZERO;
 }
 
-float Thermistor::readTempF() {
+float Thermistor::readTempF() const {
   return (readTempC() * 1.8) + 32;
 }
