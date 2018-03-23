@@ -1,7 +1,7 @@
 /*
-  Thermistor.cpp - Photon Thermistor Library
+  photon-thermistor.cpp - Photon Thermistor Library
 
-  Copyright (c) 2015 Paul Cowan <paul@monospacesoftware.com>
+  Copyright (c) 2018 Paul Cowan <paul@monospacesoftware.com>
   All right reserved.
 
   This library is free software; you can redistribute it and/or
@@ -19,15 +19,18 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 #include "photon-thermistor.h"
-#include "application.h"
-#include <math.h>
 
 #define ABS_ZERO -273.15
 
-Thermistor::Thermistor(int pin, int seriesResistor, int adcMax, int thermistorNominal,
-		int temperatureNominal, int bCoef, int samples, int sampleDelay) :
-		_pin(pin),_seriesResistor(seriesResistor), _adcMax(adcMax), _thermistorNominal(thermistorNominal),
-		_temperatureNominal(thermistorNominal), _bCoef(bCoef), _samples(samples), _sampleDelay(sampleDelay) {
+Thermistor::Thermistor(int pin, int seriesResistor, int adcMax, int thermistorNominal, int temperatureNominal, int bCoef, int samples, int sampleDelay) :
+		_pin(pin),_seriesResistor(seriesResistor), _adcMax(adcMax), _thermistorNominal(thermistorNominal), _temperatureNominal(thermistorNominal), _bCoef(bCoef), _samples(samples), _sampleDelay(sampleDelay) {
+	_vcc = 3.3;
+	_analogReference = 3.3;
+  pinMode(_pin, INPUT);
+}
+
+Thermistor::Thermistor(int pin, int seriesResistor, int adcMax, int thermistorNominal, int temperatureNominal, int bCoef, int samples, int sampleDelay) :
+		_pin(pin),_seriesResistor(seriesResistor), _adcMax(adcMax), _thermistorNominal(thermistorNominal), _temperatureNominal(thermistorNominal), _bCoef(bCoef), _samples(samples), _sampleDelay(sampleDelay) {
   pinMode(_pin, INPUT);
 }
 
@@ -42,10 +45,11 @@ float Thermistor::readTempRaw() const {
   return (1. * sum) / _samples;
 }
 float Thermistor::readTempK() const {
-  float adcAvg = readTempRaw();
-  float resistance = ((float)_seriesResistor) / (((float)_adcMax) / adcAvg - 1);
-  float s = log(resistance / _thermistorNominal) / _bCoef + 1.0f / (_temperatureNominal - ABS_ZERO);
-  return 1 / s;
+	float adcAvg = readTempRaw();
+  float resistance = -1 * (_analogReference * _seriesResistor * adcAvg) / (_analogReference * adcAvg - _vcc * _adcMax);
+  float steinhart = (1 / (_temperatureNominal - ABS_ZERO)) + ((1 / _bCoef) * log(resistance / _thermistorNominal));
+  float kelvin = 1 / steinhart;
+  return kelvin;
 }
 
 float Thermistor::readTempC() const {

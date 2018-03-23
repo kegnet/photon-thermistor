@@ -1,7 +1,7 @@
 /*
-  Thermistor.cpp - Photon Thermistor Library
+  photon-thermistor.cpp - Photon Thermistor Library
 
-  Copyright (c) 2015 Paul Cowan <paul@monospacesoftware.com>
+  Copyright (c) 2018 Paul Cowan <paul@monospacesoftware.com>
   All right reserved.
 
   This library is free software; you can redistribute it and/or
@@ -23,19 +23,18 @@
 
 #include <math.h>
 
-
 class Thermistor {
   protected:
     const int _pin;
-    const int _seriesResistor;
-    const int _adcMax;
-    const int _thermistorNominal;
-    const int _temperatureNominal;
-    const int _bCoef;
+    const float _vcc;
+    const float _analogReference;
+    const float _seriesResistor;
+    const float _adcMax;
+    const float _temperatureNominal;
+    const float _thermistorNominal;
+    const float _bCoef;
     const int _samples;
     const int _sampleDelay;
-
-    float readTempRaw() const;
 
   public:
     /*
@@ -46,14 +45,35 @@ class Thermistor {
     * arg 5: temperatureNominal: Temperature for nominal resistance in celcius (will be documented with the thermistor, assume 25 if not stated)
     * arg 6: bCoef: Beta coefficient (or constant) of the thermistor (will be documented with the thermistor, typically 3380, 3435, or 3950)
     * arg 7: samples: Number of analog samples to average (for smoothing)
-    * arg 8: sampleDelay: Milliseconds between samples (for smoothing) */
-    Thermistor(int pin, int seriesResistor, int adcMax, int thermistorNominal,
-    		int temperatureNominal, int bCoef, int samples, int sampleDelay);
+    * arg 8: sampleDelay: Milliseconds between samples (for smoothing)
+    * Assumes Vcc and analogReference are both 3.3.  Use alternative constructor if this is not the case.
+    */
+    Thermistor(int pin, int seriesResistor, int adcMax, int thermistorNominal, int temperatureNominal, int bCoef, int samples, int sampleDelay);
+
+    /*
+    * arg 1: pin: Photon analog pin
+    * arg 2: vcc: Input voltage
+    * arg 3: analogReference: reference voltage. Typically the same as vcc, but not always (ie ESP8266=1.0)
+    * arg 4: seriesResistor: The ohms value of the fixed resistor (based on your hardware setup, usually 10k)
+    * arg 5: adcMax: The maximum analog-to-digital convert value returned by analogRead (Photon is 4095 NOT the typical Arduino 1023!)
+    * arg 6: thermistorNominal: Resistance at nominal temperature (will be documented with the thermistor, usually 10k)
+    * arg 7: temperatureNominal: Temperature for nominal resistance in celcius (will be documented with the thermistor, assume 25 if not stated)
+    * arg 8: bCoef: Beta coefficient (or constant) of the thermistor (will be documented with the thermistor, typically 3380, 3435, or 3950)
+    * arg 9: samples: Number of analog samples to average (for smoothing)
+    * arg 10: sampleDelay: Milliseconds between samples (for smoothing)
+    * Allows configuration of Vcc and analogReference values.  Use shorter constructor for Photon as both are 3.3.
+    */
+    Thermistor(int pin, float vcc, float analogReference, int seriesResistor, int adcMax, int thermistorNominal, int temperatureNominal, int bCoef, int samples, int sampleDelay);
+
+    // Smoothed ADC value
+    float readTempRaw() const;
 
     // Temperature in Kelvin
     float readTempK() const;
+
     // Temperature in Celsius
     float readTempC() const;
+
     // Temperature in Farenight
     float readTempF() const;
 };
