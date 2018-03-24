@@ -1,8 +1,7 @@
 # photon-thermistor
 A fully configurable thermistor library for Particle Photon and other devices.
 
-This library allows configuration of Vcc, analog reference voltage, and ADC max, which should allow it to work for
-most devices. On Photon devices, ADC max is 4095, NOT the typical Arduino 1023!
+Simplified for Particle but also allows for full configuration of Vcc, analog reference voltage, and ADC max. Most thermistor libraries assume ADC max is 1023 but ADC max on Particle is 4095!
 
 For NTC (negative temperature coefficient) thermistors only.
 
