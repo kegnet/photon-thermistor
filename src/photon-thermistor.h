@@ -44,6 +44,21 @@ class Thermistor {
 
   public:
     /*
+    * Particle constructor, sets defaults: vcc=3.3, analogReference=3.3, adcMax=4095
+    *
+    * arg 1: pin: Photon analog pin
+    * arg 2: seriesResistor: The ohms value of the fixed resistor (based on your hardware setup, usually 10k)
+    * arg 3: thermistorNominal: Resistance at nominal temperature (will be documented with the thermistor, usually 10k)
+    * arg 4: temperatureNominal: Temperature for nominal resistance in celcius (will be documented with the thermistor, assume 25 if not stated)
+    * arg 5: bCoef: Beta coefficient (or constant) of the thermistor (will be documented with the thermistor, typically 3380, 3435, or 3950)
+    * arg 6: samples: Number of analog samples to average (for smoothing)
+    * arg 7: sampleDelay: Milliseconds between samples (for smoothing)
+    */
+    Thermistor(int pin, int seriesResistor, int thermistorNominal, int temperatureNominal, int bCoef, int samples, int sampleDelay);
+
+    /*
+    * General arduino constructor, sets defaults: vcc=3.3, analogReference=3.3
+    *
     * arg 1: pin: Photon analog pin
     * arg 2: seriesResistor: The ohms value of the fixed resistor (based on your hardware setup, usually 10k)
     * arg 3: adcMax: The maximum analog-to-digital convert value returned by analogRead (Photon is 4095 NOT the typical Arduino 1023!)
@@ -52,11 +67,12 @@ class Thermistor {
     * arg 6: bCoef: Beta coefficient (or constant) of the thermistor (will be documented with the thermistor, typically 3380, 3435, or 3950)
     * arg 7: samples: Number of analog samples to average (for smoothing)
     * arg 8: sampleDelay: Milliseconds between samples (for smoothing)
-    * Assumes Vcc and analogReference are both 3.3.  Use alternative constructor if this is not the case.
     */
     Thermistor(int pin, int seriesResistor, int adcMax, int thermistorNominal, int temperatureNominal, int bCoef, int samples, int sampleDelay);
 
     /*
+    * Full constructor, no defaults (useful for ESP8266)
+    *
     * arg 1: pin: Photon analog pin
     * arg 2: vcc: Input voltage
     * arg 3: analogReference: reference voltage. Typically the same as vcc, but not always (ie ESP8266=1.0)
@@ -67,12 +83,11 @@ class Thermistor {
     * arg 8: bCoef: Beta coefficient (or constant) of the thermistor (will be documented with the thermistor, typically 3380, 3435, or 3950)
     * arg 9: samples: Number of analog samples to average (for smoothing)
     * arg 10: sampleDelay: Milliseconds between samples (for smoothing)
-    * Allows configuration of Vcc and analogReference values.  Use shorter constructor for Photon as both are 3.3.
     */
     Thermistor(int pin, double vcc, double analogReference, int seriesResistor, int adcMax, int thermistorNominal, int temperatureNominal, int bCoef, int samples, int sampleDelay);
 
     // Smoothed ADC value
-    double readTempRaw() const;
+    double readADC() const;
 
     // Temperature in Kelvin
     double readTempK() const;
@@ -82,6 +97,9 @@ class Thermistor {
 
     // Temperature in Fahrenheit
     double readTempF() const;
+
+    // convert ADC value to Kelvin
+    double adcToK(double adc) const;
 
     // convert Kelvin to Celsius
     double kToC(double k) const;

@@ -3,12 +3,11 @@
 Thermistor *thermistor;
 
 void setup() {
-  Serial.begin(9600);
-  thermistor = new Thermistor(A0, 10000, 4095, 10000, 25, 3950, 5, 20);
+  thermistor = new Thermistor(A0, 10000, 10000, 25, 3950, 5, 20);
 }
 
 void loop() {
-  float tempF = thermistor->readTempF();
-  Particle.publish(String("temp"), String(tempF));
+  double tempF = thermistor->readTempF();
+  Particle.publish(String("tempF"), String(tempF));
   delay(5000);
 }

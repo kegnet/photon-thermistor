@@ -19,6 +19,6 @@ temperature reported on the thermometer and on the Particle console should
 match within 2 degrees.
 
 Repeat the tests above with other thermistors and other resistors.  It should
-work for various other "seriesResistor" values, and various other NTC
+work for various other seriesResistor values, and various other NTC
 thermistors, if the constructor parameters thermistorNominal,
 temperatureNominal, and bCoef are set correctly for the given thermistor.

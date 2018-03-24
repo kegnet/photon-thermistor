@@ -22,35 +22,59 @@
 
 #define ABS_ZERO -273.15
 
-Thermistor::Thermistor(int pin,
+Thermistor::Thermistor(
+	int pin,
+	int seriesResistor,
+	int thermistorNominal,
+	int temperatureNominal,
+	int bCoef,
+	int samples,
+	int sampleDelay):
+		_pin(pin),
+		_vcc(3.3),
+		_analogReference(3.3),
+		_seriesResistor(seriesResistor),
+		_adcMax(4095),
+		_thermistorNominal(thermistorNominal),
+		_temperatureNominal(temperatureNominal),
+		_bCoef(bCoef),
+		_samples(samples),
+		_sampleDelay(sampleDelay) {
+  pinMode(_pin, INPUT);
+}
+
+Thermistor::Thermistor(
+	int pin,
 	int seriesResistor,
 	int adcMax,
 	int thermistorNominal,
 	int temperatureNominal,
 	int bCoef,
 	int samples,
-	int sampleDelay) :
+	int sampleDelay):
 		_pin(pin),
+		_vcc(3.3),
+		_analogReference(3.3),
 		_seriesResistor(seriesResistor),
 		_adcMax(adcMax),
 		_thermistorNominal(thermistorNominal),
 		_temperatureNominal(temperatureNominal),
 		_bCoef(bCoef),
 		_samples(samples),
-		_sampleDelay(sampleDelay),
-		 _vcc(3.3),
-		 _analogReference(3.3) {
+		_sampleDelay(sampleDelay) {
   pinMode(_pin, INPUT);
 }
 
-Thermistor::Thermistor(int pin,
+Thermistor::Thermistor(
+	int pin,
 	double vcc,
 	double analogReference,
 	int seriesResistor,
 	int adcMax,
 	int thermistorNominal,
 	int temperatureNominal,
-	int bCoef, int samples,
+	int bCoef,
+	int samples,
 	int sampleDelay):
 		_pin(pin),
 		_vcc(vcc),
@@ -64,7 +88,7 @@ Thermistor::Thermistor(int pin,
   pinMode(_pin, INPUT);
 }
 
-double Thermistor::readTempRaw() const {
+double Thermistor::readADC() const {
   unsigned sum = 0;
   for(int i=0; i<_samples-1; i++) {
     sum += analogRead(_pin);
@@ -76,11 +100,7 @@ double Thermistor::readTempRaw() const {
 }
 
 double Thermistor::readTempK() const {
-	double adcAvg = readTempRaw();
-  double resistance = -1.0 * (_analogReference * _seriesResistor * adcAvg) / (_analogReference * adcAvg - _vcc * _adcMax);
-  double steinhart = (1.0 / (_temperatureNominal - ABS_ZERO)) + (1.0 / _bCoef) * log(resistance / _thermistorNominal);
-  double kelvin = 1.0 / steinhart;
-  return kelvin;
+	return adcToK(readADC());
 }
 
 double Thermistor::readTempC() const {
@@ -91,13 +111,18 @@ double Thermistor::readTempF() const {
   return cToF(readTempC());
 }
 
-// convert Kelvin to Celsius
+double Thermistor::adcToK(double adc) const {
+	double resistance = -1.0 * (_analogReference * _seriesResistor * adc) / (_analogReference * adc - _vcc * _adcMax);
+  double steinhart = (1.0 / (_temperatureNominal - ABS_ZERO)) + (1.0 / _bCoef) * log(resistance / _thermistorNominal);
+  double kelvin = 1.0 / steinhart;
+  return kelvin;
+}
+
 double Thermistor::kToC(double k) const {
 	double c = k + ABS_ZERO;
 	return c;
 }
 
-// convert Celsius to Fahrenheit
 double Thermistor::cToF(double c) const {
 	return (c * 1.8) + 32;
 }
