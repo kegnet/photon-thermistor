@@ -1,10 +1,11 @@
 # photon-thermistor
-A full configurable thermistor library for Particle Photon and other devices.
+A fully configurable thermistor library for Particle Photon and other devices.
 
-This library allows full configuration of Vcc, analog reference voltage, and
-ADC max, which should allow it to work for most devices.  Most thermistor
-libraries assume analogRef=Vcc, or ADC max=1024. Photon ADC max is 4095, NOT
-the typical Arduino 1023! On ESP8266 devices, ADC max is usually 1.0v, not 3.3v!
+This library allows configuration of Vcc, analog reference voltage, and ADC max, which should allow it to work for
+most device configurations.  Most thermistor libraries assume analogRef=Vcc, or ADC max=1024.
+
+* On Photon devices, ADC max is 4095, NOT the typical Arduino 1023!
+* On ESP8266 devices, ADC max is 1023 but analog reference is usually 1.0v, not 3.3v!
 
 For NTC (negative temperature coefficient) thermistors only.
 
@@ -18,7 +19,7 @@ See https://learn.adafruit.com/thermistor/using-a-thermistor
 
 Configuration is done via constructor parameters as follows:
 
-Simplified constructor; input voltage (Vcc) = reference voltage = 3.3.
+Simplified constructor: input voltage (Vcc) = reference voltage = 3.3.
 ```
 1. pin: Photon analog pin
 2. seriesResistor: The ohms value of the fixed resistor (based on your hardware setup, usually 10k)
@@ -32,7 +33,7 @@ Simplified constructor; input voltage (Vcc) = reference voltage = 3.3.
 Thermistor(int pin, int seriesResistor, int adcMax, int thermistorNominal, int temperatureNominal, int bCoef, int samples, int sampleDelay)
 ```
 
-Full constructor which allows configuration of both Vcc and analog reference voltage.
+Full constructor which allows configuration of Vcc and analog reference voltage.
 ```
 1. pin: Photon analog pin
 2: vcc: Input voltage

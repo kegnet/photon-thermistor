@@ -23,16 +23,22 @@
 
 #include <math.h>
 
+#ifdef PARTICLE
+  #include "application.h"
+#else
+  #include <arduino.h>
+#endif
+
 class Thermistor {
   protected:
     const int _pin;
-    const float _vcc;
-    const float _analogReference;
-    const float _seriesResistor;
-    const float _adcMax;
-    const float _temperatureNominal;
-    const float _thermistorNominal;
-    const float _bCoef;
+    const double _vcc;
+    const double _analogReference;
+    const double _seriesResistor;
+    const double _adcMax;
+    const double _temperatureNominal;
+    const double _thermistorNominal;
+    const double _bCoef;
     const int _samples;
     const int _sampleDelay;
 
@@ -63,19 +69,25 @@ class Thermistor {
     * arg 10: sampleDelay: Milliseconds between samples (for smoothing)
     * Allows configuration of Vcc and analogReference values.  Use shorter constructor for Photon as both are 3.3.
     */
-    Thermistor(int pin, float vcc, float analogReference, int seriesResistor, int adcMax, int thermistorNominal, int temperatureNominal, int bCoef, int samples, int sampleDelay);
+    Thermistor(int pin, double vcc, double analogReference, int seriesResistor, int adcMax, int thermistorNominal, int temperatureNominal, int bCoef, int samples, int sampleDelay);
 
     // Smoothed ADC value
-    float readTempRaw() const;
+    double readTempRaw() const;
 
     // Temperature in Kelvin
-    float readTempK() const;
+    double readTempK() const;
 
     // Temperature in Celsius
-    float readTempC() const;
+    double readTempC() const;
 
-    // Temperature in Farenight
-    float readTempF() const;
+    // Temperature in Fahrenheit
+    double readTempF() const;
+
+    // convert Kelvin to Celsius
+    double kToC(double k) const;
+
+    // convert Celsius to Fahrenheit
+    double cToF(double c) const;
 };
 
 #endif
