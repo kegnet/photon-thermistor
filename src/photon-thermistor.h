@@ -36,8 +36,8 @@ class Thermistor {
     const double _analogReference;
     const double _seriesResistor;
     const double _adcMax;
-    const double _temperatureNominal;
     const double _thermistorNominal;
+    const double _temperatureNominal;
     const double _bCoef;
     const int _samples;
     const int _sampleDelay;
